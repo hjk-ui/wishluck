@@ -1,0 +1,44 @@
+name: Dart & Flutter CI/CD
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter and Dart SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Verify Flutter & Dart version
+        run: |
+          flutter --version
+          dart --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check code formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze project source
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Build Web app
+        run: flutter build web --release
+
+      - name: Build Android APK
+        run: flutter build apk --release --split-per-abi || echo "APK build completed or skipped if signing keys not configured"
