@@ -73,24 +73,33 @@ class AppDrawer extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/wishluck_logo_rainbow.png',
+                        height: 44,
+                        width: 44,
+                        fit: BoxFit.cover,
                       ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Text(
-                        'WISHLUCK',
-                        style: TextStyle(
-                          color: AppTheme.primaryBlue,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 16,
-                          letterSpacing: 1.2,
+                    ),
+                    const SizedBox(width: 10),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'WishLuck',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18,
+                            letterSpacing: 0.5,
+                          ),
                         ),
-                      ),
+                        Text(
+                          'Educational Toys',
+                          style: TextStyle(color: Colors.white70, fontSize: 11),
+                        ),
+                      ],
                     ),
                     const Spacer(),
                     Container(

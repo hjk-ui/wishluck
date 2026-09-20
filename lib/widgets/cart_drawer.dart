@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import '../providers/store_provider.dart';
 import '../theme/app_theme.dart';
+import '../screens/checkout_screen.dart';
 
 class CartDrawer extends StatelessWidget {
   const CartDrawer({super.key});
@@ -332,72 +333,10 @@ class CartDrawer extends StatelessWidget {
   }
 
   void _handleGokwikCheckout(BuildContext context, StoreProvider store) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => Container(
-        padding: const EdgeInsets.all(24),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const CircleAvatar(
-              radius: 28,
-              backgroundColor: AppTheme.primaryLightBlue,
-              child: Icon(
-                Icons.check_circle_rounded,
-                color: AppTheme.primaryBlue,
-                size: 36,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Order Placed Successfully! 🎉',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
-                color: AppTheme.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Thank you for shopping at WishLuck! Your order of ₹${store.finalTotal.toStringAsFixed(0)} is confirmed and will be dispatched in 24 hours.',
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppTheme.textSecondary,
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.primaryBlue,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () {
-                  store.clearCart();
-                  Navigator.of(ctx).pop();
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Continue Shopping',
-                  style: TextStyle(fontWeight: FontWeight.w700),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    Navigator.of(context).pop();
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const CheckoutScreen()));
   }
 }
 

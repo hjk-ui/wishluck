@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'theme/app_theme.dart';
 import 'providers/store_provider.dart';
 import 'widgets/announcement_bar.dart';
@@ -9,6 +8,8 @@ import 'widgets/floating_reel_widget.dart';
 import 'widgets/product_card.dart';
 import 'widgets/cart_drawer.dart';
 import 'widgets/app_drawer.dart';
+import 'widgets/hero_banner_carousel.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,7 @@ class WishLuckApp extends StatelessWidget {
       title: 'WishLuck - Best Selling Kids Toys India',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const WishLuckHomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
@@ -165,32 +166,72 @@ class _WishLuckHomeScreenState extends State<WishLuckHomeScreen> {
                             _scaffoldKey.currentState?.openDrawer(),
                       ),
 
-                      // WishLuck Logo
+                      // WishLuck Rainbow Logo & Title
                       Expanded(
                         child: Center(
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                'https://cdn.shopify.com/s/files/1/0635/5206/1616/files/WISH_LUCK.avif?v=1772440958',
-                            height: 38,
-                            fit: BoxFit.contain,
-                            placeholder: (context, url) => const Text(
-                              'WISHLUCK',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w900,
-                                color: AppTheme.primaryBlue,
-                                letterSpacing: 1.2,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  'assets/wishluck_logo_rainbow.png',
+                                  height: 38,
+                                  width: 38,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      const Icon(
+                                        Icons.auto_awesome,
+                                        color: AppTheme.accentYellow,
+                                      ),
+                                ),
                               ),
-                            ),
-                            errorWidget: (context, url, error) => const Text(
-                              'WISHLUCK',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w900,
-                                color: AppTheme.primaryBlue,
-                                letterSpacing: 1.2,
+                              const SizedBox(width: 8),
+                              const Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'Wish',
+                                        style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w900,
+                                          color: AppTheme.primaryBlue,
+                                          letterSpacing: 0.5,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Luck',
+                                        style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w900,
+                                          color: Color(0xFFFF9F00),
+                                          letterSpacing: 0.5,
+                                        ),
+                                      ),
+                                      SizedBox(width: 3),
+                                      Icon(
+                                        Icons.star_rounded,
+                                        color: AppTheme.accentYellow,
+                                        size: 16,
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    'KIDS TOYS & BOOKS',
+                                    style: TextStyle(
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w800,
+                                      color: AppTheme.textSecondary,
+                                      letterSpacing: 1.0,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ),
@@ -322,110 +363,9 @@ class _WishLuckHomeScreenState extends State<WishLuckHomeScreen> {
                               child: StoryReelsSection(),
                             ),
 
-                            // Hero Collection Banner
-                            SliverToBoxAdapter(
-                              child: Container(
-                                margin: const EdgeInsets.fromLTRB(
-                                  16,
-                                  10,
-                                  16,
-                                  12,
-                                ),
-                                height: 130,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      AppTheme.primaryBlue,
-                                      Color(0xFF0056B3),
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  boxShadow: AppTheme.cardShadow,
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(16),
-                                  child: Stack(
-                                    fit: StackFit.expand,
-                                    children: [
-                                      // Image background
-                                      CachedNetworkImage(
-                                        imageUrl:
-                                            'https://cdn.shopify.com/s/files/1/0635/5206/1616/collections/Best_Sellers.jpg?v=1778826156',
-                                        fit: BoxFit.cover,
-                                        errorWidget: (context, url, error) =>
-                                            const SizedBox.shrink(),
-                                      ),
-                                      // Dark / Blue gradient overlay for readable text
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Colors.black.withValues(
-                                                alpha: 0.65,
-                                              ),
-                                              Colors.transparent,
-                                            ],
-                                            begin: Alignment.centerLeft,
-                                            end: Alignment.centerRight,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(16),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 8,
-                                                    vertical: 3,
-                                                  ),
-                                              decoration: BoxDecoration(
-                                                color: AppTheme.accentYellow,
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                              ),
-                                              child: const Text(
-                                                'FEATURED COLLECTION',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 9.5,
-                                                  fontWeight: FontWeight.w900,
-                                                  letterSpacing: 0.5,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(height: 6),
-                                            const Text(
-                                              'Best Sellers',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 22,
-                                                fontWeight: FontWeight.w900,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 2),
-                                            const Text(
-                                              'Top-rated educational toys loved across India',
-                                              style: TextStyle(
-                                                color: Colors.white70,
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                            // Hero Collection Banner Carousel (with Children on Cloud)
+                            const SliverToBoxAdapter(
+                              child: HeroBannerCarousel(),
                             ),
 
                             // Category Age Pills Horizontal Scroll
@@ -490,7 +430,7 @@ class _WishLuckHomeScreenState extends State<WishLuckHomeScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '${store.filteredProducts.length} Toys Found',
+                                      'Showing ${store.displayedProductsCount} of ${store.totalProductsCount} Toys',
                                       style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
@@ -558,13 +498,13 @@ class _WishLuckHomeScreenState extends State<WishLuckHomeScreen> {
                                   ),
                                 ),
                               )
-                            else
+                            else ...[
                               SliverPadding(
                                 padding: const EdgeInsets.fromLTRB(
                                   16,
                                   4,
                                   16,
-                                  80,
+                                  16,
                                 ),
                                 sliver: SliverGrid(
                                   gridDelegate:
@@ -574,16 +514,135 @@ class _WishLuckHomeScreenState extends State<WishLuckHomeScreen> {
                                         crossAxisSpacing: 14,
                                         childAspectRatio: 0.60,
                                       ),
-                                  delegate: SliverChildBuilderDelegate((
-                                    context,
-                                    index,
-                                  ) {
-                                    final product =
-                                        store.filteredProducts[index];
-                                    return ProductCard(product: product);
-                                  }, childCount: store.filteredProducts.length),
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) {
+                                      final product =
+                                          store.paginatedProducts[index];
+                                      return ProductCard(product: product);
+                                    },
+                                    childCount: store.paginatedProducts.length,
+                                  ),
                                 ),
                               ),
+
+                              // Pagination "Load More" / End-of-List Indicator
+                              SliverToBoxAdapter(
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    16,
+                                    8,
+                                    16,
+                                    90,
+                                  ),
+                                  child: store.hasMore
+                                      ? Center(
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            height: 48,
+                                            child: OutlinedButton.icon(
+                                              onPressed: store.isLoadingMore
+                                                  ? null
+                                                  : () => store.loadMore(),
+                                              style: OutlinedButton.styleFrom(
+                                                foregroundColor:
+                                                    AppTheme.primaryBlue,
+                                                side: const BorderSide(
+                                                  color: AppTheme.primaryBlue,
+                                                  width: 1.5,
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(14),
+                                                ),
+                                                backgroundColor: Colors.white,
+                                              ),
+                                              icon: store.isLoadingMore
+                                                  ? const SizedBox(
+                                                      width: 18,
+                                                      height: 18,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                            strokeWidth: 2,
+                                                            color: AppTheme
+                                                                .primaryBlue,
+                                                          ),
+                                                    )
+                                                  : const Icon(
+                                                      Icons.expand_more_rounded,
+                                                      size: 20,
+                                                    ),
+                                              label: Text(
+                                                store.isLoadingMore
+                                                    ? 'Loading more toys...'
+                                                    : 'Load More Toys (${store.totalProductsCount - store.displayedProductsCount} remaining)',
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 16,
+                                          ),
+                                          alignment: Alignment.center,
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    height: 1,
+                                                    width: 40,
+                                                    color:
+                                                        AppTheme.borderSubtle,
+                                                  ),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                          horizontal: 10,
+                                                        ),
+                                                    child: Icon(
+                                                      Icons.verified_rounded,
+                                                      color:
+                                                          AppTheme.freshGreen,
+                                                      size: 16,
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    height: 1,
+                                                    width: 40,
+                                                    color:
+                                                        AppTheme.borderSubtle,
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 6),
+                                              Text(
+                                                'You\'ve viewed all ${store.totalProductsCount} Best Sellers!',
+                                                style: const TextStyle(
+                                                  fontSize: 12.5,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: AppTheme.textSecondary,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 2),
+                                              const Text(
+                                                'Curated with love by WishLuck India ❤️',
+                                                style: TextStyle(
+                                                  fontSize: 11,
+                                                  color: AppTheme.textLight,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                 ),

@@ -124,21 +124,58 @@ class StoreProvider with ChangeNotifier {
     return result;
   }
 
+  // Pagination state
+  final int _pageSize = 8;
+  int _currentItemsCount = 8;
+  bool _isLoadingMore = false;
+
+  bool get isLoadingMore => _isLoadingMore;
+  bool get hasMore => _currentItemsCount < filteredProducts.length;
+  int get displayedProductsCount => paginatedProducts.length;
+  int get totalProductsCount => filteredProducts.length;
+
+  List<Product> get paginatedProducts {
+    final list = filteredProducts;
+    if (list.length <= _currentItemsCount) return list;
+    return list.sublist(0, _currentItemsCount);
+  }
+
+  void loadMore() {
+    if (_isLoadingMore || !hasMore) return;
+    _isLoadingMore = true;
+    notifyListeners();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      _currentItemsCount += _pageSize;
+      if (_currentItemsCount > filteredProducts.length) {
+        _currentItemsCount = filteredProducts.length;
+      }
+      _isLoadingMore = false;
+      notifyListeners();
+    });
+  }
+
+  void _resetPagination() {
+    _currentItemsCount = _pageSize;
+  }
+
   // Category setter
   void setCategory(String category) {
     _selectedCategory = category;
+    _resetPagination();
     notifyListeners();
   }
 
   // Search setter
   void setSearchQuery(String query) {
     _searchQuery = query;
+    _resetPagination();
     notifyListeners();
   }
 
   // Sort setter
   void setSortOption(SortOption sort) {
     _selectedSort = sort;
+    _resetPagination();
     notifyListeners();
   }
 

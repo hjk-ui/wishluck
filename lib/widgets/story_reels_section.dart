@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/product.dart';
 import '../providers/store_provider.dart';
 import '../theme/app_theme.dart';
+import 'cart_drawer.dart';
 
 class StoryReelsSection extends StatelessWidget {
   const StoryReelsSection({super.key});
@@ -534,14 +535,11 @@ class _ReelPlayerModalState extends State<_ReelPlayerModal>
                             listen: false,
                           ).addToCart(widget.product);
                           Navigator.of(context).pop();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Added "${widget.product.title}" to Cart!',
-                              ),
-                              backgroundColor: AppTheme.primaryBlue,
-                              behavior: SnackBarBehavior.floating,
-                            ),
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (ctx) => const CartDrawer(),
                           );
                         },
                         child: const Text(

@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import '../providers/store_provider.dart';
 import '../theme/app_theme.dart';
+import 'cart_drawer.dart';
 
 class FloatingReelWidget extends StatefulWidget {
   const FloatingReelWidget({super.key});
@@ -275,13 +276,11 @@ class ReelPlayerModalWrapper extends StatelessWidget {
                             listen: false,
                           ).addToCart(product);
                           Navigator.of(context).pop();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Added "${product.title}" to Cart!',
-                              ),
-                              backgroundColor: AppTheme.primaryBlue,
-                            ),
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (ctx) => const CartDrawer(),
                           );
                         },
                         icon: const Icon(Icons.shopping_bag_outlined),
